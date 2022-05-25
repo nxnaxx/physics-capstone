@@ -3,10 +3,10 @@
 import RPi.GPIO as GPIO
 import time
 
-A_I1_pwm = 6  # 속도 조절
-A_I2 = 13  # 방향 조절
-B_I1_pwm = 19
-B_I2 = 26
+A_I1_pwm = 12  # 속도 조절
+A_I2 = 16  # 방향 조절
+B_I1_pwm = 20
+B_I2 = 21
 
 GPIO.setmode(GPIO.BCM)
 
