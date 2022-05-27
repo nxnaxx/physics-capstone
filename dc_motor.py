@@ -28,9 +28,9 @@ try:
         pwmB.ChangeDutyCycle(0.0)
         time.sleep(1.0)
         GPIO.output(A_I2, True)
-        pwmA.ChangeDutyCycle(0.0)
+        pwmA.ChangeDutyCycle(50.0)
         GPIO.output(B_I2, True)  # 전진 속도 50
-        pwmB.ChangeDutyCycle(0.0)
+        pwmB.ChangeDutyCycle(50.0)
         time.sleep(1.0)
         GPIO.output(A_I2, True)
         pwmA.ChangeDutyCycle(100.0)
@@ -38,9 +38,9 @@ try:
         pwmB.ChangeDutyCycle(100.0)
         time.sleep(1.0)
         GPIO.output(A_I2, False)
-        pwmA.ChangeDutyCycle(100.0)
+        pwmA.ChangeDutyCycle(50.0)
         GPIO.output(B_I2, False)  # 후진 속도 50
-        pwmB.ChangeDutyCycle(100.0)
+        pwmB.ChangeDutyCycle(50.0)
         time.sleep(1.0)
 
 except KeyboardInterrupt:
