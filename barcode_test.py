@@ -1,12 +1,7 @@
-import argparse
-from fnmatch import fnmatchcase
-from pickle import TRUE
 import cv2
 import numpy as np
 import os
-import glob
-
-from cv2 import sort
+import pyzbar.pyzbar as pyzbar
 
 def detectBarcode(img):
   # Calculate edge strength
@@ -54,59 +49,35 @@ def detectBarcode(img):
   # To compare the size of the contours
   if (len(max_X) > len(max_Y)):
     rect = cv2.minAreaRect(max_X)
-    box = cv2.boxPoints(rect)
-    box = np.int0(box)
-    
+  else:
+    rect = cv2.minAreaRect(max_Y)
+  box = cv2.boxPoints(rect)
+  box = np.int0(box)
   
-  
-  
-  
+  return box
+
 if __name__ == '__main__':
-  # Command Line Arguments Processing
-  ap = argparse.ArgumentParser()
-  ap.add_argument("-d", "--dataset", required=True, help="path to dataset folder")
-  args = vars(ap.parse_args())
-
-  dataset = args["dataset"]
-
-
-  if (not os.path.isdir("results")):
-    os.mkdir('results')
-
-  verbose = True
-  
-  cap = cv2.VideoCapture(0)
-  
   try:
-    while (cap.isOpened()):
-      ret, img = cap.read()
+    if (not os.path.isdir('result_img')):
+      os.mkdir('result_img')
       
-      # convert to gray scale images
-      gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-      
-      # detect a barcode
-      points = detectBarcode(gray, verbose)
-  """
-  # jpg file detection
-  for imagePath in glob.glob(dataset + "/*.jpg"):
-    print(imagePath, '처리중...')
-
+    #cap = cv2.VideoCapture(0)
+    
+    img = cv2.imread('img/IMG_9807.jpg')
+    
     # convert to gray scale images
-    image = cv2.imread(imagePath)
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    
     # detect a barcode
-    points = detectBarcode(gray, verbose)
+    points = detectBarcode(gray)
     
-    # To display the barcode area
-    cv2.drawContours(image, [points], -1, (0, 255, 0), 3)
+    result_img = cv2.drawContours(img, [points], -1, (0, 0, 255), 5)
     
-    loc1 = imagePath.rfind("\\")
-    loc2 = imagePath.rfind(".")
-    fname = 'results/' + imagePath[loc1+1:loc2] + '_res.jpg'
-    cv2.imwrite(fname, image)
+    decoded = pyzbar.decode(gray)
     
-    if verbose:
-      cv2.imshow("Image", image)
-      cv2.waitKey(0)
-  """
+    for d in decoded:
+      barcode_data = d.data.decode("utf-8")
+      cv2.imwrite('./result_img/' + barcode_data + '.jpg', result_img)
+
+  except KeyboardInterrupt:
+    pass
