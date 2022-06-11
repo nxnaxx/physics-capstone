@@ -14,7 +14,7 @@ def detectBarcode(img):
   dstx = cv2.subtract(sobel_x, sobel_y)
   # Carry out equalization and thresholding
   dstx = cv2.GaussianBlur(dstx, (7, 7), 0)
-  th, dstx = cv2.threshold(dstx, 120, 200, cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+  th, dstx = cv2.threshold(dstx, 120, 200, cv2.THRESH_BINARY)
   
   # Carry out a morphology transformation
   kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (55, 11))
@@ -32,7 +32,7 @@ def detectBarcode(img):
   dsty = cv2.subtract(sobel_y, sobel_x)
   # Carry out equalization and thresholding
   dsty = cv2.GaussianBlur(dsty, (7, 7), 0)
-  th, dsty = cv2.threshold(dsty, 120, 200, cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+  th, dsty = cv2.threshold(dsty, 120, 200, cv2.THRESH_BINARY)
   
   # Carry out a morphology transformation
   kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (11, 55))
@@ -61,23 +61,40 @@ if __name__ == '__main__':
     if (not os.path.isdir('result_img')):
       os.mkdir('result_img')
       
-    #cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(0)
+    cap.set(cv2.CAP_PROP_FPS, 7)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
     
-    img = cv2.imread('img/IMG_9807.jpg')
+    #img = cv2.imread('img/IMG_9807.jpg')
     
-    # convert to gray scale images
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    
-    # detect a barcode
-    points = detectBarcode(gray)
-    
-    result_img = cv2.drawContours(img, [points], -1, (0, 0, 255), 5)
-    
-    decoded = pyzbar.decode(gray)
-    
-    for d in decoded:
-      barcode_data = d.data.decode("utf-8")
-      cv2.imwrite('./result_img/' + barcode_data + '.jpg', result_img)
+    while (cap.isOpened()):
+      ret, img = cap.read()
+      
+      # convert to gray scale images
+      gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+      
+      # detect a barcode
+      points = detectBarcode(gray)
+      
+      result_img = cv2.drawContours(img, [points], -1, (0, 0, 255), 5)
 
+      decoded = pyzbar.decode(gray)
+
+      for d in decoded:
+        barcode_data = d.data.decode("utf-8")
+        cv2.putText(img, barcode_data, (100, 200), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
+
+      cv2.imshow('img', result_img)
+      
+      key = cv2.waitKey(1)
+      if key == 27:
+        break
+      if key == ord('c'):
+        cv2.imwrite('./result_img/' + barcode_data + '.jpg', result_img)
+    
   except KeyboardInterrupt:
     pass
+
+cap.release()
+cv2.destroyAllWindows()
