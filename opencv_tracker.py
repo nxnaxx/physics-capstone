@@ -28,7 +28,7 @@ def onMouse(event, x, y, flags, param = None):
   elif event == cv2.EVENT_LBUTTONUP:
       mouse_status = 3
 
-def createTracker(track_type=1):
+def createTracker(track_type=0):
   if track_type == 0:
     tracker = cv2.TrackerCSRT_create()
   elif track_type == 1:

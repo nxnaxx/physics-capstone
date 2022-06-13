@@ -58,18 +58,15 @@ def detectBarcode(img):
 
 if __name__ == '__main__':
   try:
-    if (not os.path.isdir('result_img')):
-      os.mkdir('result_img')
-      
     cap = cv2.VideoCapture(0)
     cap.set(cv2.CAP_PROP_FPS, 7)
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
-    
-    #img = cv2.imread('img/IMG_9807.jpg')
-    
+
     while (cap.isOpened()):
       ret, img = cap.read()
+      
+      #img = cv2.imread('img/IMG_9736.jpg')
       
       # convert to gray scale images
       gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -83,16 +80,16 @@ if __name__ == '__main__':
 
       for d in decoded:
         barcode_data = d.data.decode("utf-8")
-        cv2.putText(img, barcode_data, (100, 200), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
+        cv2.putText(img, barcode_data, (100, 200), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2, cv2.LINE_AA)
 
       cv2.imshow('img', result_img)
       
-      key = cv2.waitKey(1)
+      key = cv2.waitKey(10)
       if key == 27:
         break
       if key == ord('c'):
         cv2.imwrite('./result_img/' + barcode_data + '.jpg', result_img)
-    
+      
   except KeyboardInterrupt:
     pass
 
