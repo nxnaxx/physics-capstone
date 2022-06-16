@@ -7090,6 +7090,27 @@ textarea.form-control-lg {
   justify-content: center !important;
 }
 
+.sum-items-wrap {
+  background-color: #0a53be;
+  position: absolute;
+  bottom: 1.5rem;
+  width: -webkit-fill-available;
+}
+
+.sum-items {
+  padding: 0.8rem 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.buy-items {
+  display: flex;
+}
+
+.sum-items-num, .sum-items-price {
+  color: #FFFFFF;
+}
+
 .justify-content-between {
   justify-content: space-between !important;
 }
@@ -7491,10 +7512,10 @@ textarea.form-control-lg {
   padding-bottom: 1.5rem !important;
 }
 
-/* .py-5 {
-  padding-top: 3rem !important;
+.py-5 {
+  /*padding-top: 3rem !important;*/
   padding-bottom: 3rem !important;
-} */
+} 
 
 .pt-0 {
   padding-top: 0 !important;
@@ -7844,6 +7865,9 @@ textarea.form-control-lg {
 .bg-dark {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+  position: fixed;
+  bottom: 0rem;
+  width: -webkit-fill-available;
 }
 
 .bg-black {

@@ -52,26 +52,11 @@ app.get('/items', (req, res) => {
         if (err) throw err;
 
         let result = [];
-        let barcodes = [];
 
-        items.forEach((item) => {
-          let duplicate = false;
-          for (let i = 0; i < barcodes.length; i++) {
-            if (item.barcode == barcodes[i].barcode) {
-              barcodes[i].cnt++;
-              duplicate = true;
-              break;
-            }
-          }
-          if (!duplicate) {
-            barcodes.push({ barcode: item.barcode, cnt: 1 });
-          }
-        });
-
-        barcodes.forEach((i) => {
+        items.forEach((i) => {
           products.forEach((p) => {
             if (p.barcode == i.barcode) {
-              result.push({ data: p, count: i.cnt });
+              result.push({ data: p, count: i.count });
             }
           });
         });
@@ -98,7 +83,7 @@ app.post('/items', (req, res) => {
     if (!barcode) throw 'BARCODE_NOT_FOUND';
     connection.query(`SELECT * FROM items WHERE barcode=${barcode}`, (err, items) => {
       console.log(items);
-      if (items.length == 0) {
+      if (items != undefined && items.length == 0) {
         connection.query(`INSERT INTO items (barcode) VALUES ("${barcode}")`, (err, result) => {
           if (err) {
             console.log(err);
@@ -117,6 +102,35 @@ app.post('/items', (req, res) => {
         });
       }
     });
+  } catch (error) {
+    console.log(error);
+    return res.json({
+      code: 'FAILED',
+      data: null,
+    });
+  }
+});
+
+// 개수 수량 변경 API
+app.get('/items-fetch', (req, res) => {
+  try {
+    const { barcode, count } = req.query;
+    console.log(barcode, count);
+    if (!barcode || !count) throw 'BARCODE_OR_COUNT_NOT_FOUND';
+    connection.query(
+      `UPDATE items SET count = "${count}" WHERE barcode  = "${barcode}"`,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+          throw 'FAILED_TO_UPDATE';
+        }
+        console.log('UPDATED_ITEM_SUCCESS');
+        return res.json({
+          code: 'SUCCESS',
+          data: null,
+        });
+      }
+    );
   } catch (error) {
     console.log(error);
     return res.json({
@@ -166,26 +180,11 @@ wss.on('connection', (ws) => {
           if (err) throw err;
 
           let result = [];
-          let barcodes = [];
 
-          items.forEach((item) => {
-            let duplicate = false;
-            for (let i = 0; i < barcodes.length; i++) {
-              if (item.barcode == barcodes[i].barcode) {
-                barcodes[i].cnt++;
-                duplicate = true;
-                break;
-              }
-            }
-            if (!duplicate) {
-              barcodes.push({ barcode: item.barcode, cnt: 1 });
-            }
-          });
-
-          barcodes.forEach((i) => {
+          items.forEach((i) => {
             products.forEach((p) => {
               if (p.barcode == i.barcode) {
-                result.push({ data: p, count: i.cnt });
+                result.push({ data: p, count: i.count });
               }
             });
           });

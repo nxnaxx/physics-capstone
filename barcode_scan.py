@@ -2,7 +2,7 @@ import cv2
 import pyzbar.pyzbar as pyzbar
 import requests
 
-url = "http://192.168.137.1:3000/items"
+url = "http://192.168.45.212:3000/items"
 headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 
 if __name__ == '__main__':
