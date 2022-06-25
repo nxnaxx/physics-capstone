@@ -30,7 +30,7 @@
               <div class="sum-items">
                 <div class="sum-items-display">
                   <div class="sum-items-num">총 수량 <span id="totalCnt"></span> </div>
-                  <div class="sum-items-price">총 금액 <span id="totalPrice"></span> </div>
+                  <div class="sum-items-price">총 결제금액 <span id="totalPrice"></span> </div>
                 </div>
                 <div class="buy-items">
                   <button class="buy-items-btn">바로구매</button>
@@ -62,23 +62,23 @@
                             totalPrice += res.data[i].data.price * res.data[i].count
                             result += `
                             <div class="col mb-5">
-                                <div class="card h-100">
-                                    <img class="card-img-top" src="${res.data[i].data.imageUrl}" alt="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" />
-                                    <div class="card-body p-4">
-                                        <div class="text-center" style="float: left; height: 100%;">
-                                            <h5 class="fw-bolder">
-                                                ${res.data[i].data.name}
-                                                <h6> ${res.data[i].data.price * res.data[i].count}원 </h6>
-                                            </h5>
-                                        </div>
-                                        <div class="text-center card-num" style="float: right; height: 100%; padding-inline: 1rem; padding-top: 1.5rem;">
-                                          <h5 class="fw-bolder">
-                                              수량 : <button onclick="plus(${res.data[i].data.barcode}, ${res.data[i].count})">+</button> ${res.data[i].count} <button onclick="minus(${res.data[i].data.barcode}, ${res.data[i].count})">-</button>
-                                              <button onclick="deleteItem(${res.data[i].data.barcode})">삭제</button>
-                                          </h5>
-                                        </div>
+                              <div class="card h-100">
+                                <img class="card-img-top" src="${res.data[i].data.imageUrl}" alt="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" />
+                                <div class="card-body p-4">
+                                  <div class="card-content">
+                                    <h5 class="card-name">${res.data[i].data.name}</h5>
+                                    <button onclick="deleteItem(${res.data[i].data.barcode})"><img src="./assets/delete-btn.png" /></button>
+                                  </div>
+                                  <div class="card-num">
+                                    <div class="card-info">
+                                      <button onclick="minus(${res.data[i].data.barcode}, ${res.data[i].count})"><img src="./assets/minus-btn.png" /></button>
+                                      <h4 class="card-count">${res.data[i].count}</h4>
+                                      <button onclick="plus(${res.data[i].data.barcode}, ${res.data[i].count})"><img src="./assets/plus-btn.png" /></button>
                                     </div>
+                                    <h6 class="card-price">${res.data[i].data.price * res.data[i].count}원</h6>
+                                  </div>
                                 </div>
+                              </div>
                             </div>
                             `
                         }
@@ -110,23 +110,23 @@
                     totalPrice += data[i].data.price * data[i].count
                     result += `
                     <div class="col mb-5">
-                        <div class="card h-100">
-                            <img class="card-img-top" src="${data[i].data.imageUrl}" alt="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" />
-                            <div class="card-body p-4">
-                                <div class="text-center" style="float: left; height: 100%;">
-                                    <h5 class="fw-bolder">
-                                        ${data[i].data.name}
-                                        <h6> ${data[i].data.price * data[i].count}원 </h6>
-                                    </h5>
-                                </div>
-                                <div class="text-center card-num" style="float: right; height: 100%; padding-inline: 1rem; padding-top: 1.5rem;">
-                                  <h5 class="fw-bolder">
-                                      수량 : <button onclick="plus(${data[i].data.barcode}, ${data[i].count})">+</button> ${data[i].count} <button onclick="minus(${data[i].data.barcode}, ${data[i].count})">-</button>
-                                      <button onclick="deleteItem(${data[i].data.barcode})">삭제</button>
-                                  </h5>
-                                </div>
+                      <div class="card h-100">
+                        <img class="card-img-top" src="${data[i].data.imageUrl}" alt="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" />
+                        <div class="card-body p-4">
+                          <div class="card-content">
+                            <h5 class="card-name">${data[i].data.name}</h5>
+                            <button onclick="deleteItem(${data[i].data.barcode})"><img src="./assets/delete-btn.png" /></button>
+                          </div>
+                          <div class="card-num">
+                            <div class="card-info">
+                              <button onclick="minus(${data[i].data.barcode}, ${data[i].count})"><img src="./assets/minus-btn.png" /></button>
+                              <h4 class="card-count">${data[i].count}</h4>
+                              <button onclick="plus(${data[i].data.barcode}, ${data[i].count})"><img src="./assets/plus-btn.png" /></button>
                             </div>
+                            <h6 class="card-price"> ${data[i].data.price * data[i].count}원 </h6>
+                          </div>
                         </div>
+                      </div>
                     </div>
                     `
                 }

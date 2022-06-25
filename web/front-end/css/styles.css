@@ -14,6 +14,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'GmarketSansLight';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -106,8 +113,8 @@ hr:not([size]) {
 }
 
 h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
-  margin-top: 0;
-  /* margin-bottom: 0.5rem; */
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
   font-weight: 500;
   line-height: 1.2;
 }
@@ -4039,7 +4046,7 @@ textarea.form-control-lg {
   justify-content: space-between;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  border-bottom: 0.1rem solid #d8d8d8;
+  /*border-bottom: 0.1rem solid #d8d8d8;*/
 }
 .navbar > .container,
 .navbar > .container-fluid,
@@ -4058,7 +4065,7 @@ textarea.form-control-lg {
   padding-bottom: 0.3125rem;
   margin-right: 1rem;
   font-size: 1.2rem;
-  font-family: 'GmarketSansMedium';
+  font-family: 'GmarketSansBold';
   text-decoration: none;
   white-space: nowrap;
 }
@@ -4444,7 +4451,7 @@ textarea.form-control-lg {
 }
 
 .navbar-light .navbar-brand {
-  color: rgba(0, 0, 0, 0.9);
+  color: #ffffff;
 }
 .navbar-light .navbar-brand:hover, .navbar-light .navbar-brand:focus {
   color: rgba(0, 0, 0, 0.9);
@@ -4519,10 +4526,12 @@ textarea.form-control-lg {
   flex-direction: row;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #fff;
+  background-color: #f0f0f0;
   background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.125);
+  /*border: 1px solid rgba(0, 0, 0, 0.125);*/
+  box-shadow: 0 0 0.3rem #d2d2d2;
   border-radius: 0.5rem;
+  align-items: center;
 }
 .card > hr {
   margin-right: 0;
@@ -4549,7 +4558,7 @@ textarea.form-control-lg {
 
 .card-body {
   flex: 1 1 auto;
-  padding: 0.5rem 0.5rem;
+  padding: 0.8rem 0.8rem 0.8rem 0.3rem;
 }
 
 .card-title {
@@ -4615,7 +4624,7 @@ textarea.form-control-lg {
 .card-img-bottom {
   width: 30%;
   height: 100%;
-  padding: 0.5rem 0.5rem;
+  padding: 0.8rem 0.8rem;
 }
 
 .card-img,
@@ -4673,7 +4682,62 @@ textarea.form-control-lg {
 }
 
 .card-num {
-  
+  display: flex;
+  justify-content: space-between;
+  margin-right: 0.3rem;
+  align-items: center;
+}
+
+.card-name {
+  margin-top: 1rem;
+  font-family: 'GmarketSansMedium';
+  font-size: 1.2rem;
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  align-items: flex-start;
+}
+
+.card-content > button {
+  width: 10%;
+  border: 0;
+  background: none;
+  margin-top: 0rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-content > button > img {
+  width: 100%;
+}
+
+.card-info {
+  width: 60%;
+  display: flex;
+}
+
+.card-info > button {
+  width: 17%;
+  border: 0;
+  background: none;
+  padding: 0;
+}
+
+.card-info > button > img {
+  width: 100%;
+}
+
+.card-count {
+  margin: 0.4rem 0.8rem 0 0.8rem;
+  font-family: "GmarketSansMedium";
+}
+
+.card-price {
+  font-size: 1.25rem;
+  font-family: 'GmarketSansMedium';
+  margin-bottom: 0;
 }
 
 .accordion-button {
@@ -6998,7 +7062,7 @@ textarea.form-control-lg {
 }
 
 .h-100 {
-  height: 70% !important;
+  /*height: 70% !important;*/
 }
 
 .h-auto {
@@ -7102,24 +7166,50 @@ textarea.form-control-lg {
 }
 
 .sum-items-wrap {
-  background-color: #0a53be;
+  /*background-color: #0a53be;*/
+  background-color: #f0f0f0;
   position: absolute;
-  bottom: 1.5rem;
+  bottom: 0rem;
   width: -webkit-fill-available;
 }
 
 .sum-items {
-  padding: 0.8rem 2rem;
-  display: flex;
-  justify-content: space-between;
+  padding: 2rem 2rem;
+  /*display: flex;
+  justify-content: space-between;*/
 }
 
 .buy-items {
   display: flex;
 }
 
-.sum-items-num, .sum-items-price {
-  color: #FFFFFF;
+.buy-items > button {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.6rem;
+  background-color: #0a53be;
+  color: #ffffff;
+  border: none;
+  border-radius: 0.5rem;
+  font-family: 'GmarketSansMedium';  
+}
+
+.sum-items-num {
+  display: flex;
+  justify-content: space-between;
+  font-family: "GmarketSansMedium";
+  color: gray;
+}
+
+.sum-items-num > span {
+
+}
+
+.sum-items-price {
+  display: flex;
+  justify-content: space-between;
+  font-family: "GmarketSansMedium";
+  color: #000000;
 }
 
 .justify-content-between {
@@ -7677,7 +7767,7 @@ textarea.form-control-lg {
 }
 
 .fw-bolder {
-  font-weight: bolder !important;
+  /*font-weight: bolder !important;*/
 }
 
 .lh-1 {
@@ -7705,7 +7795,7 @@ textarea.form-control-lg {
 }
 
 .text-center {
-  text-align: center !important;
+  /*text-align: center !important;*/
 }
 
 .text-decoration-none {
@@ -7870,7 +7960,7 @@ textarea.form-control-lg {
 
 .bg-light {
   --bs-bg-opacity: 1;
-  background-color: #f0f0f0 !important;
+  background-color: #0a53be !important;
 }
 
 .bg-dark {
