@@ -1,184 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Cart</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/cart.png" />
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
-    </head>
-    <body>
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="#!">장바구니</a>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Cart</title>
+    <link rel="icon" type="image/x-icon" href="assets/cart.png" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link href="css/styles.css" rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="#!">장바구니</a>
+      </div>
+    </nav>
+    <!-- Section-->
+    <section class="py-5">
+      <div class="container px-4 px-lg-5 mt-5">
+        <div
+          class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
+          id="items"
+        ></div>
+      </div>
+      <div class="sum-items-wrap">
+        <div class="sum-items">
+          <div class="sum-items-display">
+            <div class="sum-items-num">총 수량 <span id="totalCnt"></span></div>
+            <div class="sum-items-price">
+              총 결제금액 <span id="totalPrice"></span>
             </div>
-        </nav>
-        <!-- Section-->
-        <section class="py-5">
-            <div class="container px-4 px-lg-5 mt-5">
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" id="items">
-                </div>
-            </div>
-            <div class="sum-items-wrap">
-              <div class="sum-items">
-                <div class="sum-items-display">
-                  <div class="sum-items-num">총 수량 <span id="totalCnt"></span> </div>
-                  <div class="sum-items-price">총 결제금액 <span id="totalPrice"></span> </div>
-                </div>
-                <div class="buy-items">
-                  <button class="buy-items-btn">바로구매</button>
-                </div>
-              </div>
-            </div>
-        </section>
-        <!-- Footer
-        <footer class="bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy;</p></div>
-        </footer>-->
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script>
-            $(document).ready(() => {
-                $.ajax({
-                    url: "http://localhost:3000/items",
-                    method: "GET",
-                    success: (res) => {
-                        let totalCnt = 0
-                        let totalPrice = 0
-                        let result = ""
-                        console.log(res)
-                        for(let i = 0; i < res.data.length; i++){
-                            totalCnt += res.data[i].count
-                            totalPrice += res.data[i].data.price * res.data[i].count
-                            result += `
+          </div>
+          <div class="buy-items">
+            <button class="buy-items-btn">바로구매</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(() => {
+        $.ajax({
+          url: 'http://localhost:3000/items',
+          method: 'GET',
+          success: (res) => {
+            let totalCnt = 0;
+            let totalPrice = 0;
+            let result = '';
+            console.log(res);
+            for (let i = 0; i < res.data.length; i++) {
+              totalCnt += res.data[i].count;
+              totalPrice += res.data[i].data.price * res.data[i].count;
+              result += `
                             <div class="col mb-5">
                               <div class="card h-100">
-                                <img class="card-img-top" src="${res.data[i].data.imageUrl}" alt="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" />
+                                <img class="card-img-top" src="${
+                                  res.data[i].data.imageUrl
+                                }" alt="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" />
                                 <div class="card-body p-4">
                                   <div class="card-content">
-                                    <h5 class="card-name">${res.data[i].data.name}</h5>
-                                    <button onclick="deleteItem(${res.data[i].data.barcode})"><img src="./assets/delete-btn.png" /></button>
+                                    <h5 class="card-name">${
+                                      res.data[i].data.name
+                                    }</h5>
+                                    <button onclick="deleteItem(${
+                                      res.data[i].data.barcode
+                                    })"><img src="./assets/delete-btn.png" /></button>
                                   </div>
                                   <div class="card-num">
                                     <div class="card-info">
-                                      <button onclick="minus(${res.data[i].data.barcode}, ${res.data[i].count})"><img src="./assets/minus-btn.png" /></button>
-                                      <h4 class="card-count">${res.data[i].count}</h4>
-                                      <button onclick="plus(${res.data[i].data.barcode}, ${res.data[i].count})"><img src="./assets/plus-btn.png" /></button>
+                                      <button onclick="minus(${
+                                        res.data[i].data.barcode
+                                      }, ${
+                res.data[i].count
+              })"><img src="./assets/minus-btn.png" /></button>
+                                      <h4 class="card-count">${
+                                        res.data[i].count
+                                      }</h4>
+                                      <button onclick="plus(${
+                                        res.data[i].data.barcode
+                                      }, ${
+                res.data[i].count
+              })"><img src="./assets/plus-btn.png" /></button>
                                     </div>
-                                    <h6 class="card-price">${res.data[i].data.price * res.data[i].count}원</h6>
+                                    <h6 class="card-price">${
+                                      res.data[i].data.price * res.data[i].count
+                                    }원</h6>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                            `
-                        }
-                        document.getElementById('items').innerHTML = result
-                        document.getElementById('totalCnt').innerHTML = totalCnt + " 개"
-                        document.getElementById('totalPrice').innerHTML = totalPrice + " 원"
-                    },
-                    error: (err) => {
-                        console.log(err)
-                    }
-                })
-            })
-
-            const ws = new WebSocket("ws://localhost:3002")
-            ws.onopen = () => {
-                console.log('Socket Connect')
+                            `;
             }
-            ws.onmessage = (res) => {
-                console.log('From Server')
+            document.getElementById('items').innerHTML = result;
+            document.getElementById('totalCnt').innerHTML = totalCnt + ' 개';
+            document.getElementById('totalPrice').innerHTML =
+              totalPrice + ' 원';
+          },
+          error: (err) => {
+            console.log(err);
+          },
+        });
+      });
 
-                let data = JSON.parse(res.data)
+      const ws = new WebSocket('ws://localhost:3002');
+      ws.onopen = () => {
+        console.log('Socket Connect');
+      };
+      ws.onmessage = (res) => {
+        console.log('From Server');
 
-                document.getElementById('items').innerHTML = ""
-                let totalCnt = 0
-                let totalPrice = 0
-                let result = ""
-                for(let i = 0; i < data.length; i++){
-                    totalCnt += data[i].count
-                    totalPrice += data[i].data.price * data[i].count
-                    result += `
+        let data = JSON.parse(res.data);
+
+        document.getElementById('items').innerHTML = '';
+        let totalCnt = 0;
+        let totalPrice = 0;
+        let result = '';
+        for (let i = 0; i < data.length; i++) {
+          totalCnt += data[i].count;
+          totalPrice += data[i].data.price * data[i].count;
+          result += `
                     <div class="col mb-5">
                       <div class="card h-100">
-                        <img class="card-img-top" src="${data[i].data.imageUrl}" alt="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" />
+                        <img class="card-img-top" src="${
+                          data[i].data.imageUrl
+                        }" alt="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" />
                         <div class="card-body p-4">
                           <div class="card-content">
                             <h5 class="card-name">${data[i].data.name}</h5>
-                            <button onclick="deleteItem(${data[i].data.barcode})"><img src="./assets/delete-btn.png" /></button>
+                            <button onclick="deleteItem(${
+                              data[i].data.barcode
+                            })"><img src="./assets/delete-btn.png" /></button>
                           </div>
                           <div class="card-num">
                             <div class="card-info">
-                              <button onclick="minus(${data[i].data.barcode}, ${data[i].count})"><img src="./assets/minus-btn.png" /></button>
+                              <button onclick="minus(${data[i].data.barcode}, ${
+            data[i].count
+          })"><img src="./assets/minus-btn.png" /></button>
                               <h4 class="card-count">${data[i].count}</h4>
-                              <button onclick="plus(${data[i].data.barcode}, ${data[i].count})"><img src="./assets/plus-btn.png" /></button>
+                              <button onclick="plus(${data[i].data.barcode}, ${
+            data[i].count
+          })"><img src="./assets/plus-btn.png" /></button>
                             </div>
-                            <h6 class="card-price"> ${data[i].data.price * data[i].count}원 </h6>
+                            <h6 class="card-price"> ${
+                              data[i].data.price * data[i].count
+                            }원 </h6>
                           </div>
                         </div>
                       </div>
                     </div>
-                    `
-                }
-                document.getElementById('items').innerHTML = result
-                document.getElementById('totalCnt').innerHTML = totalCnt + " 개"
-                document.getElementById('totalPrice').innerHTML = totalPrice + " 원"
-            }
+                    `;
+        }
+        document.getElementById('items').innerHTML = result;
+        document.getElementById('totalCnt').innerHTML = totalCnt + ' 개';
+        document.getElementById('totalPrice').innerHTML = totalPrice + ' 원';
+      };
 
-            function plus(barcode, cnt){
-                cnt++
-                $.ajax({
-                    method: "GET",
-                    url: "http://localhost:3000/items-fetch?barcode=" + barcode + "&count=" + cnt,
-                    success: () => {
-                        console.log('success')
-                    },
-                    error: () => {
-                        console.log('error')
-                    }
-                })
-            }
+      function plus(barcode, cnt) {
+        cnt++;
+        $.ajax({
+          method: 'GET',
+          url:
+            'http://localhost:3000/items-fetch?barcode=' +
+            barcode +
+            '&count=' +
+            cnt,
+          success: () => {
+            console.log('success');
+          },
+          error: () => {
+            console.log('error');
+          },
+        });
+      }
 
-            function minus(barcode, cnt){
-                cnt--
-                if(cnt <= 0){
-                    deleteItem(barcode)
-                }else{
-                    $.ajax({
-                        method: "GET",
-                        url: "http://localhost:3000/items-fetch?barcode=" + barcode + "&count=" + cnt,
-                        success: () => {
-                            console.log('success')
-                        },
-                        error: () => {
-                            console.log('error')
-                        }
-                    })
-                }
-            }
+      function minus(barcode, cnt) {
+        cnt--;
+        if (cnt <= 0) {
+          deleteItem(barcode);
+        } else {
+          $.ajax({
+            method: 'GET',
+            url:
+              'http://localhost:3000/items-fetch?barcode=' +
+              barcode +
+              '&count=' +
+              cnt,
+            success: () => {
+              console.log('success');
+            },
+            error: () => {
+              console.log('error');
+            },
+          });
+        }
+      }
 
-            function deleteItem(barcode){
-              $.ajax({
-                method: "GET",
-                url: "http://localhost:3000/items-delete?barcode=" + barcode,
-                success: () => {
-                  console.log('success')
-                },
-                error: () => {
-                  console.log('error')
-                }
-              })
-            }
-        </script>
-    </body>
+      function deleteItem(barcode) {
+        $.ajax({
+          method: 'GET',
+          url: 'http://localhost:3000/items-delete?barcode=' + barcode,
+          success: () => {
+            console.log('success');
+          },
+          error: () => {
+            console.log('error');
+          },
+        });
+      }
+    </script>
+  </body>
 </html>
